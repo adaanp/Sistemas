@@ -77,7 +77,7 @@ La máquina **cliente** la configuraremos con una tarjeta de red en modo *red in
 
 * Al iniciar la máquina, pulsamos **F12** y vamos al *menú boot*, y aquí pulsamos la *l*, para iniciar desde LAN, es decir, desde la red del servidor.
 
-![imagen](./images/c14.PNG)
+![imagen](./images/C14.PNG)
 
 
 ![imagen](./images/c15.PNG)
