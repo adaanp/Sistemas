@@ -1,13 +1,5 @@
-# add1718-adanp
+# Administración de sistemas operativos.
 
->Esto es una anotación
+* Enlaces de las prácticas de la asignatura.
 
-* Hola mundo
-
-**Hola mundo**
-
-*Hola mundo*
-
-![imagen](./images/F3B.jpg)
-
-Enlace a [google](http://www.google.es)
+Enlace a [Clientes Ligeros LTSP](https://github.com/adaanp/add1718-adanp/tree/master/ClienteLTSP)
