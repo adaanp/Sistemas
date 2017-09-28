@@ -79,7 +79,12 @@ La máquina **cliente** la configuraremos con una tarjeta de red en modo *red in
 
 ![imagen](./images/C14.PNG)
 
+* Por algún motivo que desconozco, al iniciar la máquina por red, el cliente aparece con la pantalla duplicada y en violeta, se trata de algún *bug*.
 
 ![imagen](./images/c15.PNG)
+
+* Aún así, al volver a la máquina **servidor** y utilizar el comando *netstat -ntap* podemos comprobar que existe una conexión entre el servidor y el cliente.
+
+![imagen](./images/c16.PNG)
 
 # Adán Pérez
