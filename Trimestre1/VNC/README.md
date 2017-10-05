@@ -1,4 +1,4 @@
-# ** Acceso remoto VNC **
+# **Acceso remoto VNC**
 
 <hr>
 
