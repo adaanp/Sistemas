@@ -231,51 +231,76 @@
 
 ![imagen](./img/c48.PNG)
 
-* `/etc/ssh/sshd_config`
-![](assets/README-ec7ce8a9.jpg)
+
+* Vamos al archivo de configuración `/etc/ssh/sshd_config` y descomentamos la línea `X11Forwarding yes` para permitir el ssh via gráfico.
+
 ![imagen](./img/c49.PNG)
 
-
-![imagen](./img/c50.PNG)
-
+* Entramos cliente>servidor pero añadiendo el parámetro `-X` (mayúscula).
+  * Y abrimos el geany.
 
 ![imagen](./img/c51.PNG)
 
+![imagen](./img/c50.PNG)
+
+<hr>
+
+# Aplicaciones de Windows nativas.
+
+* Instalamos el **Wine**, que es un emulador.
 
 ![imagen](./img/c52.PNG)
 
-
 ![imagen](./img/c53.PNG)
 
+* E instalamos el **notepad** y lo abrimos.
 
 ![imagen](./img/c54.PNG)
 
+* Ahora haremos lo siguiente.
+  * Entraremos vía ssh con el parámetro -X de cliente>servidor y abriremos el **notepad**.
 
 ![imagen](./img/c55.PNG)
 
+<hr>
+
+# Restricciones de uso.
+
+* Añadimos la línea **DenyUsers perez44** al archivo `/etc/ssh/sshd_config` para prohibir el acceso del usuario perez44 por ssh.
+
 ![imagen](./img/c56.PNG)
+
+* Comprobamos que no tenemos acceso.
 
 ![imagen](./img/c57.PNG)
 
+# Restricciones en aplicaciones.
+
+* Creamos un grupo llamado `remoteapps`.
 
 ![imagen](./img/c58.PNG)
 
+* Añadimos al usuario perez44 a dicho grupo.
 
 ![imagen](./img/c59.PNG)
 
+* Encontramos donde está el *geany*.
 
 ![imagen](./img/c60.PNG)
 
+* Modificamos la aplicación para que sólo puedan usarla los usuarios del grupo *remoteapps*.
 
 ![imagen](./img/c61.PNG)
 
 
 ![imagen](./img/c62.PNG)
 
+* Abrimos el geany con un usuario que no sea perez44, y nos da error, porque denegamos su acceso.
 
 ![imagen](./img/c63.PNG)
 
-
-![imagen](./img/c63.PNG)
+* Y si la abrimos con perez44, si podremos entrar.
 
 ![imagen](./img/c64.PNG)
+
+<hr>
