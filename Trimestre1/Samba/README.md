@@ -154,3 +154,133 @@ sudo blkid
 ![img](./img/c25.png)
 
 ---
+
+## Windows
+
+* Modificamos el fichero `..\etc\hosts` para incluir el servidor y clienteA.
+
+![img](./img/c26.png)
+
+* Comprobamos la conexión hacia el servidor Samba, para ello introducimos en la línea de búsqueda: `\\ip-del-servidor-samba`
+
+![img](./img/c27.png)
+
+* Y ahora comprobamos también el acceso a todas las carpetas disponibles.
+
+> Castillo, barco y public.
+
+![img](./img/c28.png)
+
+![img](./img/c29.png)
+
+![img](./img/c30.png)
+
+![img](./img/c31.png)
+
+* net use * /d /y, para cerrar las conexión SMB/CIFS que se ha realizado desde el cliente al servidor.
+
+![img](./img/c32.png)
+
+* Resultados: `smbstatus` y `netstat -ntap` desde el servidor, y `netstat -n` desde el cliente Windows.
+
+![img](./img/c33.png)
+
+![img](./img/c34.png)
+
+![img](./img/c35.png)
+
+---
+
+## Cliente Windows Comandos.
+
+* Usamos `net use` para comprobar que no hay conexiones establecidas.
+
+![img](./img/c36.png)
+
+* Con el comando `net view` deberíamos ver las máquinas accesibles por la red. En mi caso no me muestra mi servidor propio porque la tenía apagada.
+
+![img](./img/c37.png)
+
+* Y con `net use /?` para la ayuda sobre el comando.
+
+![img](./img/c38.png)
+
+* Establecemos una conexión utilizando el comando `net use S: \\ip-servidor-samba\recurso clave /USER:usuario /p:yes` al servidor Samba.
+
+![img](./img/c39.png)
+
+* Y ahora con `net use` ya vemos que hay una conexión establecida.
+
+![img](./img/c40.png)
+
+* Comprobamos resultados: `smbstatus` y `netstat -ntap` desde el servidor y `netstat -n` desde Windows.
+
+![img](./img/c41.png)
+
+![img](./img/c42.png)
+
+![img](./img/c43.png)
+
+---
+
+## Cliente Linux
+
+* Desde entorno gráfico, comprobamos la conexión al servidor buscando la carpeta `smb://172.18..19.31/`.
+
+![img](./img/c44.png)
+
+* Ahora comprobamos que podemos crear carpetas en **castillo** y en **barco** pero en **public** no.
+
+![img](./img/c45.png)
+
+![img](./img/c46.png)
+
+![img](./img/c47.png)
+
+* Comprobamos resultados: `smbstatus` y `netstat -ntap` desde el servidor y `netstat -ntap` desde el cliente.
+
+![img](./img/c48.png)
+
+![img](./img/c49.png)
+
+![img](./img/c50.png)
+
+## Cliente Linux Comandos.
+
+* Con el comando `smbclient --list 172.18.19.31` mostramos los recursos de nuestro servidor Samba.
+
+![img](./img/c51.png)
+
+* Nos dirigimos a la carpeta `mnt` para crear las siguientes carpetas: `samba19-remoto` y dentro de ella, `castillo`.
+
+![img](./img/c52.png)
+
+* Ahora montamos la carpeta en el sistema con el comando: `mount -t cifs //172.18.19.31/castillo /mnt/samba19-remoto/castillo -o username=soldado1`
+
+![img](./img/c53.png)
+
+* Utilizamos el comando `df -hT` para comprobar que se ha montado correctamente.
+
+![img](./img/c54.png)
+
+* Comprobamos resultados: `smbstatus` y `netstat -ntap` desde el servidor y `netstat -ntap` desde el cliente Windows.
+
+![img](./img/c55.png)
+
+![img](./img/c56.png)
+
+![img](./img/c57.png)
+
+---
+
+## Montaje Automático.
+
+* Para que se monte automáticamente, podemos configurar el archivo `/etc/fstab` y añadimos la línea `//smb-server19/castillo /mnt/samba19-remoto/castillo cifs username=soldado1,password=Admin1 0 0`
+
+![img](./img/c58.png)
+
+* Reiniciamos la máquina y se monta automáticamente. En mi caso me pide la contraseña porque había tenido un error en el archivo anterior, y es que en vez de poner `Admin1` en la *password*, puse `clave`, pero ya está corregido.
+
+![img](./img/c59.png)
+
+---
