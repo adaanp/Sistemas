@@ -214,6 +214,8 @@ docker ps -a
 
 ![img](./img/000242.png)
 
+![img](./img/000156.png)
+
 * Crear el fichero **Dockerfile** con el siguiente contenido:
 ```
 FROM debian:8
@@ -235,6 +237,8 @@ EXPOSE 80
 
 CMD ["/root/server.sh"]
 ```
+
+![img](./img/000155.png)
 
 * `docker images`: Consultamos las imágenes disponibles.
 
@@ -270,8 +274,6 @@ CMD ["/root/server.sh"]
 * `docker commit -p CONTAINERID container-backup`, grabar una imagen de nombre "container-backup" a partir del contenedor CONTAINERID.
 
 ![img](./img/000249.png)
-
-![img](./img/000250.png)
 
 * Exportar imagen docker a fichero:
   * `docker save -o ~/containerXX-backup.tar containerXX-backup`, guardamos la imagen "container-backup" en un fichero tar.

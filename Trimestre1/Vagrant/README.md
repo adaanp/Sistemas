@@ -8,6 +8,14 @@
 
 ![img](./img/Selección_001.png)
 
+* `vagrant version`, para comprobar la versión actual de Vagrant.
+
+![img](./img/Selección_041.png)
+
+* `VBoxManage -v`, para comprobar la versión actual de VirtualBox.
+
+![img](./img/Selección_042.png)
+
 ## Proyecto
 
 * Crear un directorio para nuestro proyecto vagrant, para ello creamos una carpeta con un nombre cualquiera.
@@ -30,9 +38,9 @@
 
 ![img](./img/Selección_005.png)
 
-* Cambiamos la línea `config.vm.box = "base" por config.vm.box = "micaja19_ubuntu_precise32"`
+* Cambiamos la línea `config.vm.box = "base" por config.vm.box = "micaja19_ubuntu"`
 
-![img](./img/Selección_021.png)
+![img](./img/Selección_045.png)
 
 ## Iniciar una máquina nueva
 
@@ -191,6 +199,10 @@ Vagrant.configure(2) do |config|
 * Muestro la lista de cajas disponibles, pero sólo tengo 1 porque todavía no he incluido la que acabo de crear. Finalmente, añado la nueva caja creada por mí al repositorio de vagrant.
 
 ![img](./img/Selección_039.png)
+
+![img](./img/Selección_047.png)
+
+![img](./img/Selección_048.png)
 
 ![img](./img/Selección_040.png)
 
