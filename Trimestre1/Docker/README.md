@@ -28,6 +28,10 @@
 
 ![img](./img/000205.png)
 
+* Mostramos otra vez la versión docker:
+
+![img](./img/000160.png)
+
 * Salimos de nuestra sesión y volvemos a entrar, o bien reiniciamos, para que cargue la configuración.
 
 * Comprobamos que todo funciona con los siguientes comandos ->
@@ -244,7 +248,7 @@ CMD ["/root/server.sh"]
 
 ![img](./img/000243.png)
 
-* `docker build -t dvarrui/nginx2 .`: Construimos la imagen a partir del Dockerfile
+* `docker build -t adan/nginx2 .`: Construimos la imagen a partir del Dockerfile
 
 ![img](./img/000244.png)
 
@@ -255,11 +259,17 @@ CMD ["/root/server.sh"]
 * A continuación vamos a crear un contenedor con el nombre con_nginx2, a partir de la imagen adan/nginx2, y queremos que este contenedor ejecute el programa /root/server.sh.
   * `docker run --name con_nginx2 -p 80 -t dvarrui/nginx2 /root/server.sh`
 
+![img](./img/000162.png)
+
 * Comprobar en el navegador URL: http://localhost:PORTNUMBER
 
 ![img](./img/000246.png)
 
 * Comprobar en el navegador URL: http://localhost:PORTNUMBER/holamundo.html
+
+* El PORTNUMBER lo averigüamos con el comando `docker ps -a`
+
+![img](./img/000245.png)
 
 ![img](./img/000247.png)
 
