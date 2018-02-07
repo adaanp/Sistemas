@@ -267,7 +267,7 @@ CMD ["/root/server.sh"]
 
 * Comprobar en el navegador URL: http://localhost:PORTNUMBER/holamundo.html
 
-* El PORTNUMBER lo averigüamos con el comando `docker ps -a`
+* El PORTNUMBER lo averiguamos con el comando `docker ps -a`
 
 ![img](./img/000245.png)
 
