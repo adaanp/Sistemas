@@ -1,8 +1,12 @@
-# Traineeship
+## Zabbix
 
-1. [Hola](#id1)
-2. [Adios](#id2)
+1. [Sysload](#id1)
+2. [Raids](#id2)
 
-## Hola<a name="id1"></a>
+## Sysloads <a name="id1"></a>
 
-## Adios<a name="id2"></a>
+* To check the load with the system we can use the command `cat /proc/loadavg`.
+
+The result is that -> [img](./img/000362.png)
+
+## Raids <a name="id2"></a>
