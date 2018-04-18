@@ -1,7 +1,17 @@
 ## Zabbix
 
+0. [Confd](#id0)
 1. [Sysload](#id1)
 2. [Raids](#id2)
+3. [NTP](#id3)
+4. [Grafana](#id4)
+
+
+## Confd <a name="id0"></a>
+* The first thing we have to do, is to allow Zabbix to do external commands, so we have to change a little thing on `zabbix_agentd.conf` -> ![img](./img/000381.png) and put it to 1.
+
+* Also, we have to unlock unsafe parameters to allow some characters.
+ ![img](./img/000380.png)
 
 ## Sysloads <a name="id1"></a>
 
@@ -72,3 +82,140 @@ Also, if we want to check this on Graphs, degradation and disks, we can use defa
 You can add alerts, so if one raid disk goes down, it will show you a red alert, for example.
 On hosts, check **Triggers** and fill it with the options you want. Here you have an example of the first I said, red alert on degradation. By the way, you can create easily the trigger with the **Expression Constructor**.
 ![img](./img/000377.png)
+
+
+# NTP <a name="id3"></a>
+## Installation  
+### Server
+First of all, you have to install de NTP server on the Debian machine with the follwing command:  
+`aptitude install ntp`    
+
+Then, you have to check the status of the service with:  
+`systemctl status ntp.service`  
+
+![img](./img/ntp1.png)  
+
+The service will be down, so you have to start it and then check it again:    
+
+![img](./img/ntp2.png)  
+
+And finally, it is advisable to enable the start on the boot for the service:    
+
+![img](./img/ntp3.png)  
+
+### Client.  
+On the CentOS client, the installation process is the same. The only thing that varies is the installation command:  
+`yum install ntp`     
+
+After this, follow the steps shown before on the server part.
+
+
+## Configuration.  
+At this point, the rest of the work will be done on the **client**. Having said that, open `/etc/ntp.conf` file and on the *#Use public servers from...* paragraph, go to the bottom line and add:  
+`server 192.168.22.200 iburst`  
+
+![img](./img/ntp4.png)   
+
+Then, look for the *# Hosts on local network...* part and add the following line too:  
+`restrict 192.168.22.200 mask 0.0.0.0 nomodify notrap`  
+
+![img](./img/ntp5.png)  
+
+What this does is restricting the client connection to the *Debian server*.  
+
+Finally, restart the service with:  
+`systemctl restart ntp.service`  
+
+## The task.
+In order to get the necessary values for setting up a NTP graph, you have to first know the right command, which is shown below:  
+`/usr/sbin/ntpdate -q 192.168.22.200`  
+Where *192.168.22.200* is the local IP of the server.
+
+![img](./img/ntp6.png)
+
+As you can see, there are lots of information that you dont need (only offset and delay values are needed).   
+To fulfill this task, we tought that the best option was to create a script with the command, then export the information of the command to a text document and finally send this document to zabbix. We tried to execute the command directly from zabbix but the zabbix user of the client had a lot of troubles with the superuser permissions that we couldnt solve.  
+
+Having said that, lets get to work:   
+- Open the terminal and type `crontab -e`
+- Then, add the following tasks:    
+    `* * * * /usr/sbin/ntpdate -q 192.168.22.200 | cut -f 8-8 -d " " > /etc/zabbix/ntp2.txt`  
+    and  
+    `* * * * /usr/sbin/ntpdate -q 192.168.22.200 | cut -f 6-6 -d " " > /etc/zabbix/ntp1.txt`   
+    where ntpscr(number).txt is the name of the file that will contain the filtered information. Save and exit.  
+- Check it with `crotab -l`:  
+  ![img](./img/ntp7.png)   
+
+With the *ntpscr1.txt* and *ntpscr2.txt* files created, you are now ready to import them on zabbix, but first you have to edit the */etc/zabbix/zabbix_agentd.conf* and add the following *UserParmeters* in onder to create the required items for the graphs.
+```cmd     
+UserParameter=`ntpoffset.ruby /etc/zabbix/ntp2.txt
+UserParameter=`ntpdelay.ruby /etc/zabbix/ntp1.txt
+```  
+It should look like this (we have a few more lines from others scripts):
+![img](./img/ntp8.png)  
+Save and exit.  
+
+Restart the agent with:  
+`systemctl restart zabbix_agentd.serice`  
+
+Now, go to the frontend and open *Configuration>Hosts>Items* and click on *Create new item* on the top right corner.  
+Then, create the following two items with the configuration shown below:    
+![img](./img/ntp9.png)    
+
+![img](./img/ntp10.png)  
+
+Save, and go to *Graphs* and click on *Create Graph* to create a graph with these values:  
+![img](./img/ntp11.png)  
+As you may see, at the bottom part you can add the previously created ntp items.  
+
+And the final product should look similar to something like this:  
+![img](./img/ntp12.png)
+
+# Grafana <a name="id4"></a>  
+## Installation
+**The installation is on the server.**  
+Firstly, you have to add this line to the `/etc/apt/sources.list`:  
+
+`deb https://packagecloud.io/grafana/stable/debian/ stretch main`  
+
+Then add the Package Cloud key. This allows you to install signed packages:  
+
+`curl https://packagecloud.io/gpg.key | sudo apt-key add -`  
+
+With all this set, we are now ready to update and install this new repository:  
+
+`sudo apt-get update`  
+`sudo apt-get install grafana`   
+
+Finally, you have to start the service and enable its automatic boot:   
+
+`sudo service grafana-server start`   
+`sudo update-rc.d grafana-server defaults`  
+
+
+## Configuration.  
+Now, you are ready to open Grafana in you browser. Just type `http:://ip-server:3000` where *3000* is the default port used by Grafana. If all goes well, you will see the Grafana login page with *user:admin* and *pass:admin*.  
+
+![img](./img/grafana1.png)    
+
+On the home page, you must look for the Zabbix app panel, located on the right side. Then click on the Zabbix app and enable it by pressing the Enable button.   
+
+![img](./img/grafana2.png)  
+
+On the configuration panel, select data sources and click on *Add data source*.  
+
+![img](./img/grafana4.png)
+
+Write the following configuration for the plugin (you might have to replace the IP). Save and test.  
+
+![img](./img/grafana5.png)  
+
+![img](./img/grafana6.png)   
+
+If its succesful, the page will display this message:  
+
+![img](./img/grafana7.png)   
+
+And finally, go to de Zabbix dashboard to check if Grafana is reciving the information from Zabbix.  
+
+![img](./img/grafana8.png)
