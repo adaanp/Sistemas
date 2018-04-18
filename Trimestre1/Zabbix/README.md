@@ -155,6 +155,8 @@ It should look like this (we have a few more lines from others scripts):
 
 
 ![img](./img/ntp8.png)  
+
+
 Save and exit.  
 
 Restart the agent with:  
