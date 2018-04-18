@@ -151,7 +151,7 @@ With the *ntpscr1.txt* and *ntpscr2.txt* files created, you are now ready to imp
 UserParameter=`ntpoffset.ruby /etc/zabbix/ntp2.txt
 UserParameter=`ntpdelay.ruby /etc/zabbix/ntp1.txt
 ```  
-It should look like this (we have a few more lines from others scripts):
+It should look like this (we have a few more lines from others scripts):  
 
 
 ![img](./img/ntp8.png)  
