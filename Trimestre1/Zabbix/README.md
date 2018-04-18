@@ -152,11 +152,13 @@ UserParameter=`ntpoffset.ruby /etc/zabbix/ntp2.txt
 UserParameter=`ntpdelay.ruby /etc/zabbix/ntp1.txt
 ```  
 It should look like this (we have a few more lines from others scripts):
+
+
 ![img](./img/ntp8.png)  
 Save and exit.  
 
 Restart the agent with:  
-`systemctl restart zabbix_agentd.serice`  
+`systemctl restart zabbix_agentd.service`  
 
 Now, go to the frontend and open *Configuration>Hosts>Items* and click on *Create new item* on the top right corner.  
 Then, create the following two items with the configuration shown below:    
