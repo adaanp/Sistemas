@@ -10,7 +10,7 @@
 ## Confd <a name="id0"></a>
 * The first thing we have to do, is to allow Zabbix to do external commands, so we have to change a little thing on `zabbix_agentd.conf` -> ![img](./img/000381.png) and put it to 1.
 
-* Also, we have to unlock unsafe parameters to allow some characters.
+* Its good to mention that if you are having some troubles with special characters like `* , / \ |` you may have to unlock unsafe parameters to allow these characters, **but it wont be neccesary for these tasks**.   
  ![img](./img/000380.png)
 
 ## Sysloads <a name="id1"></a>
