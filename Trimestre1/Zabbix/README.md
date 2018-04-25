@@ -22,22 +22,17 @@ The result is that -> ![img](./img/000362.png)
 As we can see, there are 5 values.
 The first three columns measure CPU and IO utilization of the last one, five, and 10 minute periods. The fourth column shows the number of currently running processes and the total number of processes. The last column displays the last process ID used.
 
-* We want the first three columns, so we can take this values with `cat /proc/loadavg | cut -f 1-3 -d " "`
+* We want the first value, so we can take this with `cat /proc/loadavg | cut -f 1-1 -d " "`
 
-Our objective is to print this values on a graphic, and we have three numbers, so a graphic can't screen that.
-A simple way to screen it, is to divide one per one.
+Our objective is to print this value on a graphic, and we have text, because it is a textfile, so a graphic can't screen that.
+A simple way to screen it, is converting it to decimal.
 
-Making scripts for each value, we can take it easy.
-Three scripts like these:
+We did that script:
 
-* ![img](./img/000363.png)
+* ![img](./img/000382.png)
 
-* ![img](./img/000364.png)
-
-* ![img](./img/000365.png)
-
-The next step is to add these values or *keys* to `zabbix_agentd.conf`, on **UserParameters**.
-![img](./img/000366.png)
+The next step is to add that value or *key* to `zabbix_agentd.conf`, on **UserParameters**.
+![img](./img/000383.png)
 
 * So now, we can add the new items on Zabbix.
 
@@ -48,11 +43,11 @@ The rest of fields you should fill as you wants to configure.
 
 ![img](./img/000367.png)
 
-Remember that we need to create 3 items, because we have 3 values on different scripts, so we repeat the same process but with another ID.
+**Remember that we need to create an item**
 
 The last step is to create the graph. Click on **Graphs** ![img](./img/000368.png) and then **Create Graph**.
 
-You configure your graph as you want, but add the 3 items we have created before, like that:
+You configure your graph as you want, but add the item we have created before, like that:
 ![img](./img/000369.png)
 
 * Then you go to the *Main Menu* of Zabbix, and on *Graphs* you can check your own graph.
