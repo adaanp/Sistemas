@@ -123,10 +123,9 @@ Finally, restart the service with:
 
 ## The task.
 In order to get the necessary values for setting up a NTP graph, you have to first know the right command, which is shown below:  
-`/usr/sbin/ntpdate -q 192.168.22.200`  
-Where *192.168.22.200* is the local IP of the server.
+`/usr/sbin/ntpq -p`.
 
-![img](./img/ntp6.png)
+![img](./img/000388.png)
 
 As you can see, there are lots of information that you dont need (only offset and delay values are needed).   
 To fulfill this task, we tought that the best option was to create a script with the command, then export the information of the command to a text document and finally send this document to zabbix. We tried to execute the command directly from zabbix but the zabbix user of the client had a lot of troubles with the superuser permissions that we couldnt solve.  
