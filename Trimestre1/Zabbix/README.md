@@ -131,27 +131,24 @@ Where *192.168.22.200* is the local IP of the server.
 As you can see, there are lots of information that you dont need (only offset and delay values are needed).   
 To fulfill this task, we tought that the best option was to create a script with the command, then export the information of the command to a text document and finally send this document to zabbix. We tried to execute the command directly from zabbix but the zabbix user of the client had a lot of troubles with the superuser permissions that we couldnt solve.  
 
-Having said that, lets get to work:   
-- Open the terminal and type `crontab -e`
-- Then, add the following tasks:    
-    `* * * * /usr/sbin/ntpdate -q 192.168.22.200 | cut -f 8-8 -d " " > /etc/zabbix/ntp2.txt`  
-    and  
-    `* * * * /usr/sbin/ntpdate -q 192.168.22.200 | cut -f 6-6 -d " " > /etc/zabbix/ntp1.txt`   
-    where ntpscr(number).txt is the name of the file that will contain the filtered information. Save and exit.  
-- Check it with `crotab -l`:  
-  ![img](./img/ntp7.png)   
+The first thing is about the necessary scripts. We did 2 differents scripts for each value, one for *Offset* and another for *Delay*.
+The first one is delay value, and that's the script:
+![img](./img/000385.png)  
 
-With the *ntpscr1.txt* and *ntpscr2.txt* files created, you are now ready to import them on zabbix, but first you have to edit the */etc/zabbix/zabbix_agentd.conf* and add the following *UserParmeters* in onder to create the required items for the graphs.
+The second one is offset value, with that script:
+![img](./img/000386.png)
+
+With the *pyth2.txt* and *pyth3.txt* files created, you are now ready to import them on zabbix, but first you have to edit the */etc/zabbix/zabbix_agentd.conf* and add the following *UserParmeters* in onder to create the required items for the graphs.
 ```cmd     
-UserParameter=`ntpoffset.ruby /etc/zabbix/ntp2.txt
-UserParameter=`ntpdelay.ruby /etc/zabbix/ntp1.txt
+UserParameter=`ntpoffset.python /etc/zabbix/pyth2.txt
+UserParameter=`ntpdelay.python /etc/zabbix/pyth3.txt
 ```  
 
 
 It should look like this (we have a few more lines from others scripts):
 
 
-![img](./img/ntp8.png)  
+![img](./img/000387.png)  
 
 
 Save and exit.  
